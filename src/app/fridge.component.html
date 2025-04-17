@@ -1,0 +1,74 @@
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      
+      <div class="container">
+        
+        <h1>Refrigerator Inventory</h1>
+                
+        <form #fridgeForm="ngForm" (ngSubmit)="onSubmit()">
+        
+          <input type="hidden" name="id" [(ngModel)]="fridgeItem.id">
+          
+          <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required [(ngModel)]="fridgeItem.name">
+          </div>
+          
+          <div>
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" [(ngModel)]="fridgeItem.category">
+          </div>
+          
+          <div>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" [(ngModel)]="fridgeItem.quantity">
+          </div>
+          
+          <div>
+            <label for="bestBefore">Best Before:</label>
+            <input type="date" id="bestBefore" name="bestBefore" [(ngModel)]="fridgeItem.bestBefore">
+          </div>
+          
+          <div>
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes" [(ngModel)]="fridgeItem.notes"></textarea>
+          </div>
+          
+          <button type="submit">{{ fridgeItem.id ? 'Update' : 'Create' }}</button>
+          <button type="button" (click)="clearForm()">Clear</button>
+        </form>
+        
+        <hr>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Best Before</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td>{{ item.name }}</td>
+              <td>{{ item.category }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.bestBefore }}</td>
+              <td>{{ item.notes }}</td>
+              <td>
+                <button (click)="editItem(item)">Edit</button>
+                <button (click)="deleteItem(item.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+  </div>
+</main>
