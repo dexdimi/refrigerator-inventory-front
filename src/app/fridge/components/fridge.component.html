@@ -17,17 +17,30 @@
           
           <div>
             <label for="category">Category:</label>
-            <input type="text" id="category" name="category" [(ngModel)]="fridgeItem.category">
+            <select id="category" name="category" [(ngModel)]="fridgeItem.category">
+              <option *ngFor="let cat of categoryOptions" [value]="cat.name">
+                {{ [cat.label] }}
+              </option>
+            </select>
           </div>
           
           <div>
             <label for="quantity">Quantity:</label>
             <input type="number" id="quantity" name="quantity" [(ngModel)]="fridgeItem.quantity">
           </div>
+
+          <div>
+            <label for="unit">Unit:</label>
+            <select id="unit" name="unit" [(ngModel)]="fridgeItem.unit">
+              <option *ngFor="let unit of unitOptions" [value]="unit.name">
+                {{ [unit.label] }}
+              </option>
+            </select>
+          </div>
           
           <div>
-            <label for="bestBefore">Best Before:</label>
-            <input type="date" id="bestBefore" name="bestBefore" [(ngModel)]="fridgeItem.bestBefore">
+            <label for="bestBeforeDate">Best Before:</label>
+            <input type="date" id="bestBeforeDate" name="bestBeforeDate" [(ngModel)]="fridgeItem.bestBeforeDate">
           </div>
           
           <div>
@@ -47,6 +60,7 @@
               <th>Name</th>
               <th>Category</th>
               <th>Quantity</th>
+              <th>Unit</th>
               <th>Best Before</th>
               <th>Notes</th>
               <th>Actions</th>
@@ -55,9 +69,10 @@
           <tbody>
             <tr *ngFor="let item of items">
               <td>{{ item.name }}</td>
-              <td>{{ item.category }}</td>
+              <td>{{ getCategoryLabel(item.category!) }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ item.bestBefore }}</td>
+              <td>{{ getUnitLabel(item.unit!) }}</td>
+              <td>{{ item.bestBeforeDate }}</td>
               <td>{{ item.notes }}</td>
               <td>
                 <button (click)="editItem(item)">Edit</button>
@@ -65,6 +80,8 @@
               </td>
             </tr>
           </tbody>
+          <button (click)="loadItems(currentPage - 1)" [disabled]="currentPage === 0">Previous</button>
+          <button (click)="loadItems(currentPage + 1)" [disabled]="currentPage + 1 === totalPages">Next</button>
         </table>
       </div>
 
